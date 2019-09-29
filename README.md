@@ -12,3 +12,6 @@
 
 [Z子打印](Zstr)   
    
+[动态规划](dynamicProgramming)
+
+[最长公共子序列](maxCommPrefix)
