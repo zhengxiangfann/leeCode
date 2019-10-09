@@ -6,7 +6,6 @@ import (
 )
 
 /*动态规划*/
-
 func fib(n int) int {
     if n <=2 {
         return 1
@@ -28,9 +27,7 @@ func fib_dy(n int) int {
     return curr
 }
 
-
 func fib_dp(N int) int{
-
     var dp []int
     dp = append(dp, 0,1,1)
     //dp[1], dp[2] = 1,1
@@ -68,7 +65,6 @@ func coinChange(coins []int, amount int) int{
 }
 
 
-
 func coinChange_dy(coins []int, amount int) int {
     var dp []int
     dp = append(dp, 0)
@@ -96,12 +92,13 @@ func coinChange_dy(coins []int, amount int) int {
     }
 }
 
-
 func main(){
     //v := fib_dp(3)
     //fmt.Println(v)
 
-    coins := []int{1,2,5,10}
-    r := coinChange_dy(coins[:], 3)
+    coins := []int{1,10}
+    r := coinChange_dy(coins[:], 11)
     fmt.Println(r)
 }
+
+
