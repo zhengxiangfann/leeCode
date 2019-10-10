@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+)
 
 //Definition for singly-linked list.
  type ListNode struct {
@@ -9,33 +11,85 @@ import "fmt"
  }
 
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
+    if head == nil || n <= 0 {
+        return head
+    }
     hP, curP, nP := head, head, head
-    for curP != nil {
-        curP = curP.Next
-        n--
-        if n <= 0 {
-            nP = nP.Next
+    for i := 0; i < n; i++ {
+        if curP == nil {
+            return head
+        } else {
+            curP = curP.Next
         }
     }
-    nP.Val = nP.Next.Val
+
+    if curP == nil {
+        return hP.Next
+    }
+
+    for curP.Next != nil {
+        curP = curP.Next
+        nP = nP.Next
+    }
+    //nP.Val = nP.Next.Val
     nP.Next = nP.Next.Next
     return hP
 }
 
+func reverseList1(head *ListNode) *ListNode {
+   if head == nil || head.Next == nil {
+       return head
+   }
+   n := reverseList(head.Next)
+   head.Next.Next = head
+   head.Next = nil
+   return n
+}
+
+func reverseList(head *ListNode) *ListNode {
+    var pre, cur, next  *ListNode
+    cur = head
+    for cur !=nil {
+        next = cur.Next
+        cur.Next =pre
+        pre = cur
+        cur =next
+    }
+    return pre
+}
+
+func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
+    if l1 == nil {
+        return l2
+    }
+    if l2 == nil {
+        return l1
+    }
+    if l1.Val < l2.Val {
+        l1.Next = mergeTwoLists(l1.Next, l2)
+        return l1
+    } else {
+        l2.Next = mergeTwoLists(l1, l2.Next)
+        return l2
+    }
+}
+
 func main(){
-    var l = new(ListNode)
-    l.Val=1
-    l.Next = new(ListNode)
-    l.Next.Val = 2
-    l.Next.Next = new(ListNode)
-    l.Next.Next.Val = 3
-    l.Next.Next.Next =nil
-    //for l != nil {
-    //    fmt.Print(l.Val, " ")
-    //    l = l.Next
-    //}
-    //fmt.Println()
-    r := removeNthFromEnd(l,2)
+    var l1 = new(ListNode)
+    l1.Val=1
+    l1.Next = new(ListNode)
+    l1.Next.Val = 2
+    l1.Next.Next = nil
+
+    var l2 = new(ListNode)
+    l2.Val=1
+    l2.Next = new(ListNode)
+    l2.Next.Val = 2
+    l2.Next.Next = new(ListNode)
+    l2.Next.Next.Val=3
+    l2.Next.Next.Next=nil
+
+    r := mergeTwoLists(l1, l2)
     for r != nil {
         fmt.Print(r.Val, " ")
         r = r.Next
