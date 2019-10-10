@@ -74,12 +74,43 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
     }
 }
 
+// 回文链表
+func isPalindrome(head *ListNode) bool {
+    var stack []int
+    mid, cur := head, head
+    n := 0
+    for cur.Next != nil {
+        if cur.Next.Next != nil {
+            cur = cur.Next.Next
+            mid = mid.Next
+        } else {
+            cur = cur.Next
+        }
+        n++
+    }
+
+    for mid.Next != nil {
+        mid = mid.Next
+        stack = append(stack, mid.Val)
+    }
+    i := len(stack)-1
+    for i>=0 {
+        if head.Val != stack[i] {
+            return false
+        }
+        i--
+    }
+    return true
+}
+
+
 func main(){
     var l1 = new(ListNode)
     l1.Val=1
-    l1.Next = new(ListNode)
-    l1.Next.Val = 2
-    l1.Next.Next = nil
+    l1.Next = nil
+    //l1.Next = new(ListNode)
+    //l1.Next.Val = 2
+    //l1.Next.Next = nil
 
     var l2 = new(ListNode)
     l2.Val=1
@@ -87,11 +118,13 @@ func main(){
     l2.Next.Val = 2
     l2.Next.Next = new(ListNode)
     l2.Next.Next.Val=3
-    l2.Next.Next.Next=nil
+    l2.Next.Next.Next= new(ListNode)
+    l2.Next.Next.Next.Val=4
+    l2.Next.Next.Next.Next=nil
+    //l2.Next.Next.Next.Next=new(ListNode)
+    //l2.Next.Next.Next.Next.Val=5
+    //l2.Next.Next.Next.Next.Next=nil
 
-    r := mergeTwoLists(l1, l2)
-    for r != nil {
-        fmt.Print(r.Val, " ")
-        r = r.Next
-    }
+    r := isPalindrome(l2)
+    fmt.Println(r)
 }
