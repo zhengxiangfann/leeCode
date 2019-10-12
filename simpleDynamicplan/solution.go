@@ -89,10 +89,37 @@ func maxSubArray(nums []int) int {
     return sum
 }
 
+func rob(nums []int) int {
+    if len(nums) == 0 {
+        return 0
+    }
+    dp := make([]int, len(nums))
+    dp[0] = nums[0]
+    max := dp[0]
+    resut := dp[0]
+    for i:=1;i < len(nums); i++ {
+           if i - 2 < 0 {
+               dp[i] = nums[i]
+           } else {
+               //dp[i] = nums[i] + dp[i-2]
+               dp[i] = nums[i] + max
+           }
+           if max < dp[i-1] {
+               max = dp[i-1]
+           }
+           if dp[i] > resut {
+               resut = dp[i]
+           }
+    }
+    fmt.Println(dp)
+    return resut
+}
+
+
 func main() {
     //r := climbStairs(5)
     //fmt.Println(r)
-    var prices = []int{-2,1,-3,4,-1,2,1,-5,4}
-    r := maxSubArray(prices)
+    var prices = []int{2,1,1,1,4}
+    r := rob(prices)
     fmt.Println(r)
 }
