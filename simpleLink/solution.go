@@ -104,13 +104,41 @@ func isPalindrome(head *ListNode) bool {
 }
 
 
+
+// 判断链表是否有环形
+func hasCycle(head *ListNode) bool {
+    fast, slow := head, head
+    for slow != nil &&fast !=nil && fast.Next != nil {
+        slow = slow.Next
+        fast = fast.Next.Next
+        if slow == fast {
+            return true
+        }
+    }
+    return false
+}
+
+func hasCycle1(head *ListNode) bool {
+    pm := map[*ListNode]int{}
+    pos := 0
+    for head != nil {
+        if _, ok := pm[head]; ok {
+            return true
+        }
+        pm[head] = pos
+        head = head.Next
+        pos++
+    }
+    return false
+}
+
 func main(){
     var l1 = new(ListNode)
     l1.Val=1
     l1.Next = nil
-    //l1.Next = new(ListNode)
-    //l1.Next.Val = 2
-    //l1.Next.Next = nil
+    l1.Next = new(ListNode)
+    l1.Next.Val = 2
+    l1.Next.Next = nil
 
     var l2 = new(ListNode)
     l2.Val=1
@@ -125,6 +153,6 @@ func main(){
     //l2.Next.Next.Next.Next.Val=5
     //l2.Next.Next.Next.Next.Next=nil
 
-    r := isPalindrome(l2)
+    r := hasCycle(l1)
     fmt.Println(r)
 }
